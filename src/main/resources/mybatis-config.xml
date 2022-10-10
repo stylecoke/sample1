@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    
+<configuration>
+
+	<!-- mybatis를 이용하여 VO에 return값을 받을때 camelcase를 적용 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
+	<!-- VO class에게 Alias 적용 -->
+	<typeAliases>
+    	<typeAlias type="com.myapp.vo.BoardVO" alias="boardVO"/>
+	</typeAliases>
+	   
+</configuration>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- Mapper.xml에 쿼리문을 입력 -->
+<mapper namespace="com.myapp.mapper.BoardMapper">
+    <!-- 
+        mybatis-config.xml의 typeAlias에 등록해두지 않았다면 아래와 같이 해야 한다.
+        
+        <select id="list" resultType="com.myapp.vo.BoardVO" >
+          	SELECT * FROM BOARD
+        	ORDER BY seq
+        </select>
+    -->
+    
+    <select id="list" resultType="boardVO">
+        SELECT * FROM board
+        ORDER BY seq
+    </select>
+ 	
+ 	<select id="select" parameterType="int" resultType="boardVO">
+ 		SELECT * FROM board
+ 		WHERE seq = #{seq}
+ 	</select>
+    
+    <insert id="insert" parameterType="boardVO">
+    	INSERT INTO board
+    	 (title, content, writer, password, regDate, count)
+    	VALUES
+    	 (#{title}, #{content}, #{writer}, #{password}, SYSDATE(), 0);
+    	<selectKey keyProperty="seq" resultType="Integer">
+    		SELECT COALESCE(MAX(seq), 0)
+    		FROM board 
+    	</selectKey>
+    </insert>
+    
+    <update id="update" parameterType="boardVO">
+    	UPDATE board SET
+    	title = #{title},
+    	content = #{content},
+    	writer = #{writer}
+    	WHERE seq = #{seq}
+    	AND password = #{password}
+    </update>
+    
+    <update id="updateCount" parameterType="int">
+    	UPDATE board SET
+    	count = count + 1
+    	WHERE seq = #{seq}
+    </update>
+    
+    <delete id="delete" parameterType="boardVO">
+    	DELETE FROM board
+    	WHERE seq = #{seq}
+    	AND password = #{password}
+    </delete>
+    
+</mapper>
